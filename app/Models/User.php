@@ -37,6 +37,7 @@ class User extends Authenticatable
      // los datos que no devolvera
     protected $hidden = [
         'usr_password',
+        'usr_estate',
         'remember_token',
     ];
 

@@ -22,25 +22,9 @@ class validationInputs
 
             $data = array_map('trim', $data); //quitamos los espacios al json
 
-            // creamos una llave con el nombre igual al de la BD
-            $data['usr_name'] = $data['name'];
-            $data['usr_surname'] = $data['surname'];
-            $data['usr_role'] = $data['role'];
-            $data['usr_email'] = $data['email'];
-
-            // borramos los campos que no necesitamos del arreglo
-            unset( $data['name']);
-            unset( $data['surname']);
-            unset( $data['role']);
-            unset( $data['email']);
-
-
- // VALIDAR LOS CAMPOS
+    // VALIDAR LOS CAMPOS
              //para mas informacion de las validaciones buscar en LaravelValidation
             if( !empty( $data['password'] ) ) {
-
-                $data['usr_password'] = $data['password'];
-                unset( $data['password']);
 
                 $validate = \Validator::make(
                     $data,
@@ -66,7 +50,26 @@ class validationInputs
             }
 
             // verificar si los campos pasaron las validaciones
-            if ($validate->fails()) {
+            if ( !$validate->fails() ) {
+
+                // VALIDAR EL ROL
+                $validateInputs = new \validateInputs(); // llamamos el helper que valida el rol
+                $valRole = $validateInputs->validateRole( $data['usr_role'] ); // le enviamos el el a la funcion de la validacion del rol
+
+                if( $valRole ){
+
+                    $request->user = $data; // agrego el usuario a la request
+                    return $next($request);
+
+                }else{
+
+                    return response()->json(
+                        [
+                            'status' => 'error',
+                            'message'  =>  ' el Rol no es valido'
+                        ],400);
+                }
+            }else{
 
                 return response()->json(
                     [
@@ -74,20 +77,6 @@ class validationInputs
                         'message'  =>  $validate->errors()
                     ],400);
             }
-
-    // VALIDAR EL ROL
-                $validateInputs = new \validateInputs(); // llamamos el helper que valida el rol
-                $valRole = $validateInputs->validateRole( $data['usr_role'] ); // le enviamos el el a la funcion de la validacion del rol
-
-                if( !$valRole ){
-                    return response()->json(
-                        [
-                            'status' => 'error',
-                            'message'  =>  ' el Rol no es valido'
-                        ],400);
-                }
-
-
         }else{
             return response()->json(
                 [
@@ -95,8 +84,5 @@ class validationInputs
                     'message'  =>  'Datos invalidos'
                 ],200);
         }
-
-        $request->user = $data; // agrego el usuario a la request
-        return $next($request);
     }
 }
