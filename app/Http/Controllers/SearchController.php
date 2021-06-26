@@ -10,27 +10,11 @@ use PhpParser\Node\Expr\BinaryOp\Concat;
 class SearchController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->coleccionesPermitidas = array(
-            'users',
-            'products',
-            'categories'
-        );
-    }
-
     public function search( Request $request ){
 
 
         $coleccion = $request->coleccion;
         $termino = $request->termino;
-
-        if( !in_array( $coleccion, $this->coleccionesPermitidas) ) {
-            return response()->json(
-                [
-                    'message' => 'coleccion no valida. colecciones validas: '.implode( ',', $this->coleccionesPermitidas)
-                ],400);
-        }
 
         $results = [];
         switch( $coleccion ){

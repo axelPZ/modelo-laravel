@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PruebaController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UploadsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -75,5 +76,10 @@ Route::get('/token', function () {
     Route::post('/api/auth', [AuthController::class, 'login'])->middleware('validateLogin');
 
     // BUSCAR
-    Route::get('/api/search/{coleccion}/{termino}',[SearchController::class, 'search']);
+    Route::get('/api/search/{coleccion}/{termino}',[SearchController::class, 'search'])->middleware('validateColeccion');
 
+    //SUBIR O ACTUALIZAR IMAGEN
+    Route::post('/api/uploads/{coleccion}/{id}',[UploadsController::class, 'upload'])->middleware('validateColeccion','validateImg');
+
+    // DEVOLVER LA IMAGEN
+    Route::get('/api/uploads/{coleccion}/{id}', [UploadsController::class, 'getImg'])->middleware('validateColeccion');

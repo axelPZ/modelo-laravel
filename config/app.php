@@ -175,7 +175,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\validateInputs::class,
-        App\Providers\validateJWT::class
+        App\Providers\validateJWT::class,
+        App\Providers\validateId::class,
+        App\Providers\saveImg::class
 
     ],
 
@@ -230,7 +232,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'validateInputs' => App\helpers\validation::class,
-        'generateJWT' => App\helpers\generateJWT::class
+        'generateJWT' => App\helpers\generateJWT::class,
+        'validateId' => App\helpers\validateId::class,
+        'saveImg' => App\helpers\saveImg::class
     ],
 
 ];

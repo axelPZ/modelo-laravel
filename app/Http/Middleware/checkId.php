@@ -19,8 +19,7 @@ class checkId
     public function handle(Request $request, Closure $next)
     {
         $id = $request->id;
-        $user = new User();
-        $result = $user->where('usr_id', $id)->first();
+        $result = User::where('usr_id', $id)->first();
 
         if( isset( $result ) && is_object( $result ) && $result->usr_estate === 1 ){
 

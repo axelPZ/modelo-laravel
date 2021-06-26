@@ -66,6 +66,8 @@ class Kernel extends HttpKernel
         'validateInputs' => \App\Http\Middleware\validationInputs::class,
         'validateLogin' => \App\Http\Middleware\validateLogin::class,
         'validateJWT' => \App\Http\Middleware\validateJWT::class,
-        'isAdminRole' => \App\Http\Middleware\isAdminRole::class
+        'isAdminRole' => \App\Http\Middleware\isAdminRole::class,
+        'validateColeccion' => \App\Http\Middleware\validateColeccion::class,
+        'validateImg' => \App\Http\Middleware\validateImg::class
     ];
 }

@@ -70,7 +70,6 @@ class UserController extends Controller
             ], 200);
     }
 
-
      // EDITAR USUARIO
      public function updateUser( Request $request, $id ){
 
