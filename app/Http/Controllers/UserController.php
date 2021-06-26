@@ -19,13 +19,15 @@ class UserController extends Controller
 
         // QUERYS DE LARAVEL
         // https://translate.google.com/translate?hl=es&sl=en&u=https://laravel.com/docs/8.x/queries&prev=search&pto=aue
-        $user = new User();
-        $result = $user->where('usr_estate', 1)->get();
+
+        $result = User::where('usr_estate', 1)->get();
+        $count = User::where('usr_estate', 1)->count();
 
         return response()->json(
             [
                 'code'   => 200,
                 'status' => 'success',
+                'total' => $count,
                 'posts'  =>  $result
             ],200);
     }

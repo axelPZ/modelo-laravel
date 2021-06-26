@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PruebaController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -67,10 +68,12 @@ Route::get('/token', function () {
     Route::get('/api/user', [UserController::class,'getUser']);
     Route::get('/api/user/{id}', [UserController::class,'getByIdUser'])->middleware('validateIdUser');
     Route::post('/api/user', [UserController::class,'addUser'])->middleware('validateInputs');
-
     Route::put('/api/user/{id}', [UserController::class,'updateUser'])->middleware('validateJWT','validateIdUser', 'validateInputs');
     Route::delete('/api/user/{id}', [UserController::class,'deleteUser'])->middleware('validateJWT','isAdminRole','validateIdUser');
 
     // LOGIN
     Route::post('/api/auth', [AuthController::class, 'login'])->middleware('validateLogin');
+
+    // BUSCAR
+    Route::get('/api/search/{coleccion}/{termino}',[SearchController::class, 'search']);
 
