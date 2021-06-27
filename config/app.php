@@ -177,7 +177,9 @@ return [
         App\Providers\validateInputs::class,
         App\Providers\validateJWT::class,
         App\Providers\validateId::class,
-        App\Providers\saveImg::class
+        App\Providers\saveImg::class,
+        App\Providers\getIdPost::class,
+        App\Providers\getIdCategory::class
     ],
 
     /*
@@ -233,7 +235,9 @@ return [
         'validateInputs' => App\helpers\validation::class,
         'generateJWT' => App\helpers\generateJWT::class,
         'validateId' => App\helpers\validateId::class,
-        'saveImg' => App\helpers\saveImg::class
+        'saveImg' => App\helpers\saveImg::class,
+        'getIdPost' => App\helpers\getIdPost::class,
+        'getIdCategory' => App\helpers\getIdCategory::class
     ],
 
 ];

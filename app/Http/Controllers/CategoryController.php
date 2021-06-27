@@ -25,15 +25,14 @@ class CategoryController extends Controller
             ],200);
     }
 
+
+
     // TRAER LAS CATEGORIAS POR ID
     public function getByIdCategory( Request $request ){
 
         $id = $request->id;
-        $result = Category::select( 'cat_id', 'cat_name','cat_img', 'usr_name', 'usr_surname', 'usr_img' )
-        ->join('users', 'usr_id', '=', 'cat_idUser')
-        ->where( 'cat_id', $id)
-        ->where( 'cat_estate', 1)
-        ->get();
+        $getIdCategory = new \getIdCategory();  // instanciar el helper que contiene la consulta
+        $result = $getIdCategory->getId( $id, 'cat_id');
 
         return response()->json(
             [
@@ -42,16 +41,14 @@ class CategoryController extends Controller
             ],200);
     }
 
+
+
     // TRAER LAS CATEGORIAS POR ID DE USARIO
     public function getCategoryIdUser( Request $request){
 
         $id = $request->id;
-        $result = Category::select( 'cat_id', 'cat_name','cat_img', 'usr_name', 'usr_surname', 'usr_img' )
-        ->join('users', 'usr_id', '=', 'cat_idUser')
-        ->where( 'cat_idUser', $id)
-        ->where( 'cat_estate', 1)
-        ->get();
-
+        $getIdCategory = new \getIdCategory();  // instanciar el helper que contiene la consulta
+        $result = $getIdCategory->getId( $id, 'cat_idUser');
 
         if(  sizeof($result) > 0 ){
             return response()->json(
@@ -60,30 +57,35 @@ class CategoryController extends Controller
                     'total' => $result
                 ],200);
         }
-
         return response()->json([
                 'mensaje' => ' Usuario sin categorias para mostrar'
             ],400);
     }
+
+
 
     // TRAER CATEGORIAS POR USUARIO LOGEADO
     public function getCategoryUserRegister( Request $request){
 
         $user = $request->user; // obtengo el id del usuario logeado, que se a agregado al validar el JWT
         $idUser = $user['usr_id'];
+        $getIdCategory = new \getIdCategory();  // instanciar el helper que contiene la consulta
+        $result = $getIdCategory->getId( $idUser, 'cat_idUser');
 
-        $result = Category::select( 'cat_id', 'cat_name','cat_img', 'usr_name', 'usr_surname', 'usr_img' )
-        ->join('users', 'usr_id', '=', 'cat_idUser')
-        ->where( 'cat_idUser', $idUser)
-        ->where( 'cat_estate', 1)
-        ->get();
-
-        return response()->json(
-            [
-                'status' => 'success',
-                'total' => $result
-            ],200);
+        if(  sizeof($result) > 0 ){
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'total' => $result
+                ],200);
+        }
+        return response()->json([
+                'mensaje' => ' Usuario sin categorias para mostrar'
+            ],400);
     }
+
+
+
 
     // AGREGAR CATEGORIAS
     public function addCategory( Request $request ){

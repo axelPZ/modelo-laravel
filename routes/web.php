@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\PruebaController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
@@ -73,6 +74,7 @@ Route::get('/token', function () {
     Route::put('/api/user/{id}', [UserController::class,'updateUser'])->middleware('validateJWT','validateIdUser', 'validateInputs');
     Route::delete('/api/user/{id}', [UserController::class,'deleteUser'])->middleware('validateJWT','isAdminRole','validateIdUser');
 
+
     // LOGIN
     Route::post('/api/auth', [AuthController::class, 'login'])->middleware('validateLogin');
 
@@ -87,6 +89,7 @@ Route::get('/token', function () {
 
     // SUBIR O ACTUALIZAR IMAGEN A CLOUDINARY (pendiente)
 
+
     // CATEGORIAS
     Route::get('/api/categories', [CategoryController::class, 'getCategories']);
     Route::get('/api/categories/{id}', [CategoryController::class, 'getByIdCategory'])->middleware( 'validateIdCategory' );
@@ -98,5 +101,17 @@ Route::get('/token', function () {
 
 
     // POSTS
+    Route::get('/api/post', [PostController::class, 'getPost']);
+    Route::get('/api/post/{id}', [PostController::class, 'getByIdPost'])->middleware( 'validateIdPost' );
+    Route::get('/api/post/user/{id}', [PostController::class, 'getPostIdUser'])->middleware( 'validateIdUser' );
+    Route::get('/api/post/category/{id}', [PostController::class, 'getPostIdCategory'])->middleware( 'validateIdCategory' );
+    Route::patch('/api/post/user/register', [PostController::class, 'getPostUserRegister'])->middleware( 'validateJWT' );
+    Route::post('/api/post/{id}', [PostController::class, 'addPost'])->middleware( 'validateJWT', 'validateIdCategory', 'validateInputPost' );
+
+    Route::delete('/api/post/{id}', [PostController::class, 'deletePost'])->middleware( 'validateJWT', 'validateIdPost', 'isAdminRole' );
+
+
+
+
 
 

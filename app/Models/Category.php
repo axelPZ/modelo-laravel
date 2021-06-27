@@ -18,5 +18,10 @@ class Category extends Model
     }
 
 
+    protected $hidden = [
+        'cat_estate'
+    ];
+
+
 
 }

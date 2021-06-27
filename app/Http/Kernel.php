@@ -70,6 +70,8 @@ class Kernel extends HttpKernel
         'validateColeccion' => \App\Http\Middleware\validateColeccion::class,
         'validateImg' => \App\Http\Middleware\validateImg::class,
         'validateIdCategory' => \App\Http\Middleware\validateIdCategory::class,
-        'validateInputCategory' => \App\Http\Middleware\validateInputCategory::class
+        'validateInputCategory' => \App\Http\Middleware\validateInputCategory::class,
+        'validateIdPost' => \App\Http\Middleware\validateIdPost::class,
+        'validateInputPost' => \App\http\Middleware\validateInputPost::class,
     ];
 }
