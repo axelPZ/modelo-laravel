@@ -177,8 +177,7 @@ return [
         App\Providers\validateInputs::class,
         App\Providers\validateJWT::class,
         App\Providers\validateId::class,
-        App\Providers\saveImg::class,
-        CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
+        App\Providers\saveImg::class
     ],
 
     /*
@@ -234,8 +233,7 @@ return [
         'validateInputs' => App\helpers\validation::class,
         'generateJWT' => App\helpers\generateJWT::class,
         'validateId' => App\helpers\validateId::class,
-        'saveImg' => App\helpers\saveImg::class,
-        'Cloudinary' => CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::class,
+        'saveImg' => App\helpers\saveImg::class
     ],
 
 ];
