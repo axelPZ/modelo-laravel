@@ -68,11 +68,11 @@ Route::get('/token', function () {
 // API REST
 
     // USUARIOS
-    Route::get('/api/user', [UserController::class,'getUser']);
-    Route::get('/api/user/{id}', [UserController::class,'getByIdUser'])->middleware('validateIdUser');
-    Route::post('/api/user', [UserController::class,'addUser'])->middleware('validateInputs');
-    Route::put('/api/user/{id}', [UserController::class,'updateUser'])->middleware('validateJWT','validateIdUser', 'validateInputs');
-    Route::delete('/api/user/{id}', [UserController::class,'deleteUser'])->middleware('validateJWT','isAdminRole','validateIdUser');
+    Route::get('/api/user',             [ UserController::class,'getUser']);
+    Route::get('/api/user/{idUser}',    [ UserController::class,'getByIdUser'])->middleware('validateIdUser');
+    Route::post('/api/user',            [ UserController::class,'addUser'])    ->middleware('validateInputs');
+    Route::put('/api/user/{idUser}',    [ UserController::class,'updateUser']) ->middleware('validateJWT','validateIdUser', 'validateInputs');
+    Route::delete('/api/user/{idUser}', [ UserController::class,'deleteUser']) ->middleware('validateJWT','isAdminRole','validateIdUser');
 
 
     // LOGIN
@@ -91,24 +91,24 @@ Route::get('/token', function () {
 
 
     // CATEGORIAS
-    Route::get('/api/categories', [CategoryController::class, 'getCategories']);
-    Route::get('/api/categories/{id}', [CategoryController::class, 'getByIdCategory'])->middleware( 'validateIdCategory' );
-    Route::get('/api/categories/user/{id}', [CategoryController::class, 'getCategoryIdUser'])->middleware( 'validateIdUser' );
-    Route::patch('/api/categories/user/register', [CategoryController::class, 'getCategoryUserRegister'])->middleware( 'validateJWT' );
-    Route::post('/api/categories', [CategoryController::class, 'addCategory'])->middleware( 'validateJWT', 'validateInputCategory' );
-    Route::put('/api/categories/{id}', [CategoryController::class, 'updateCategory'])->middleware( 'validateJWT', 'validateIdCategory', 'validateInputCategory' );
-    Route::delete('/api/categories/{id}', [CategoryController::class, 'deleteCategory'])->middleware( 'validateJWT', 'isAdminRole', 'validateIdCategory' );
+    Route::get('/api/categories',                 [ CategoryController::class, 'getCategories']);
+    Route::get('/api/categories/{idCategory}',    [ CategoryController::class, 'getByIdCategory'])        ->middleware( 'validateIdCategory' );
+    Route::get('/api/categories/user/{idUser}',   [ CategoryController::class, 'getCategoryIdUser'])      ->middleware( 'validateIdUser' );
+    Route::patch('/api/categories/user/register', [ CategoryController::class, 'getCategoryUserRegister'])->middleware( 'validateJWT' );
+    Route::post('/api/categories',                [ CategoryController::class, 'addCategory'])            ->middleware( 'validateJWT', 'validateInputCategory' );
+    Route::put('/api/categories/{idCategory}',    [ CategoryController::class, 'updateCategory'])         ->middleware( 'validateJWT', 'validateIdCategory', 'validateInputCategory' );
+    Route::delete('/api/categories/{idCategory}', [ CategoryController::class, 'deleteCategory'])         ->middleware( 'validateJWT', 'isAdminRole', 'validateIdCategory' );
 
 
     // POSTS
-    Route::get('/api/post', [PostController::class, 'getPost']);
-    Route::get('/api/post/{id}', [PostController::class, 'getByIdPost'])->middleware( 'validateIdPost' );
-    Route::get('/api/post/user/{id}', [PostController::class, 'getPostIdUser'])->middleware( 'validateIdUser' );
-    Route::get('/api/post/category/{id}', [PostController::class, 'getPostIdCategory'])->middleware( 'validateIdCategory' );
-    Route::patch('/api/post/user/register', [PostController::class, 'getPostUserRegister'])->middleware( 'validateJWT' );
-    Route::post('/api/post/{id}', [PostController::class, 'addPost'])->middleware( 'validateJWT', 'validateIdCategory', 'validateInputPost' );
-
-    Route::delete('/api/post/{id}', [PostController::class, 'deletePost'])->middleware( 'validateJWT', 'validateIdPost', 'isAdminRole' );
+    Route::get('/api/post',                       [ PostController::class, 'getPost' ]);
+    Route::get('/api/post/{idPost}',              [ PostController::class, 'getByIdPost' ])        ->middleware( 'validateIdPost' );
+    Route::get('/api/post/user/{idUser}',         [ PostController::class, 'getPostIdUser' ])      ->middleware( 'validateIdUser' );
+    Route::get('/api/post/category/{idCategory}', [ PostController::class, 'getPostIdCategory' ])  ->middleware( 'validateIdCategory' );
+    Route::patch('/api/post/user/register',       [ PostController::class, 'getPostUserRegister' ])->middleware( 'validateJWT' );
+    Route::post('/api/post/{idCategory}',         [ PostController::class, 'addPost' ])            ->middleware( 'validateJWT', 'validateIdCategory', 'validateInputPost' );
+    Route::put('/api/post/{idPost}/{idCategory}', [ PostController::class, 'updatePost' ])         ->middleware( 'validateJWT', 'validateIdPost', 'validateIdCategory', 'validateInputPost');
+    Route::delete('/api/post/{idPost}',           [ PostController::class, 'deletePost' ])         ->middleware( 'validateJWT', 'validateIdPost', 'isAdminRole' );
 
 
 

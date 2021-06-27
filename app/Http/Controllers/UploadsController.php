@@ -19,6 +19,7 @@ class UploadsController extends Controller
         // validar el id
         $validateId = new \validateId();
         $result = $validateId->validateIdColeccion( $id, $coleccion );
+
         if( empty( $result ) ){
             return response()->json( [
                     'method'  =>  " $coleccion, con su id: $id, sin resultados"
@@ -61,6 +62,10 @@ class UploadsController extends Controller
 
             case 'categories':
                 $img = $result['cat_img'];
+                break;
+
+            case 'posts':
+                $img = $result['pst_img'];
                 break;
 
             default:

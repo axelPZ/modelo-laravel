@@ -17,7 +17,7 @@ class validateIdPost
      */
     public function handle(Request $request, Closure $next)
     {
-        $id = $request->id;
+        $id = $request->idPost;
         $result = Post::where('pst_id', $id)->first();
 
         if( isset( $result ) && is_object( $result ) && $result->pst_estate === 1 ){

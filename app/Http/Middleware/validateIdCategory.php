@@ -17,7 +17,7 @@ class validateIdCategory
      */
     public function handle(Request $request, Closure $next)
     {
-        $id = $request->id;
+        $id = $request->idCategory;
 
         $result = Category::where('cat_id', $id)->first();
 

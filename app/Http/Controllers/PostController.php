@@ -29,7 +29,7 @@ class PostController extends Controller
     // TRAER POST POR ID
     public function getByIdPost( Request $request ){
 
-        $id = $request->id;
+        $id = $request->idPost;
         $getIdPost = new \getIdPost();
         $result = $getIdPost->getId( $id, 'pst_id');
 
@@ -42,7 +42,7 @@ class PostController extends Controller
     // TRAER POST POS ID DEL USUARIO
     public function getPostIdUser( Request $request ){
 
-        $id = $request->id;
+        $id = $request->idUser;
         $getIdPost = new \getIdPost();
         $result = $getIdPost->getId( $id, 'pst_idUser');
 
@@ -65,7 +65,7 @@ class PostController extends Controller
     // TRAER POST POR ID DE CATEGORIA
     public function getPostIdCategory( Request $request ){
 
-        $id = $request->id;
+        $id = $request->idCategory;
         $getIdPost = new \getIdPost();
         $result = $getIdPost->getId( $id, 'pst_idCategory');
 
@@ -109,13 +109,14 @@ class PostController extends Controller
     }
 
 
+
     // AGREGAR POST
     public function addPost( Request $request ){
 
         $data = $request->json()->all();
         $user = $request->user;
         $idUser = $user['usr_id'];
-        $idCategory = $request ->id;
+        $idCategory = $request ->idCategory;
 
         $newPost = new Post();
         $newPost->pst_idUser = $idUser;
@@ -131,14 +132,40 @@ class PostController extends Controller
 
 
     // EDITAR POST
-    public function updatePost(){
+    public function updatePost( Request $request ){
 
+        $idCategory = $request->idCategory;
+        $idPost = $request->idPost;
+        $user = $request->user; // obtengo el id del usuario logeado, que se a agregado al validar el JWT
+        $idUser = $user['usr_id'];
+        $data = $request->json()->all();
+
+        $result = Post::where('pst_id', $idPost)->first();
+        $idUserPost = $result['pst_idUser'];
+
+           // verificar que el usuario que quiere editar el post es el que la creo
+           if ( $idUser != $idUserPost) {
+            return response()->json( [
+                'mensaje' => 'El usuario logiado, no es el que creo el post'
+            ], 400);
+        }
+
+        $post_update = Post::where( 'pst_id',$idPost )->update( [ 'pst_title' => strtoupper( $data['pst_title'] ), 'pst_content' => $data['pst_content'], 'pst_idCategory' => $idCategory ] );
+        $result = Post::where('pst_id', $idPost)->first();
+
+        return response()->json(
+            [
+                'status' => 'success',
+                'data' => $result,
+            ],200);
     }
+
+
 
     // ELIMAR POST
     public function deletePost( Request $request ){
 
-        $id = $request->id;
+        $id = $request->idPost;
 
         $user_update = POST::where( 'pst_id',$id )->update( ['pst_estate' => 2] );
         $result = POST::where('pst_id', $id)->first();

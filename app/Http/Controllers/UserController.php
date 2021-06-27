@@ -32,10 +32,10 @@ class UserController extends Controller
 
 
     // LLAMAR USUARIO POR ID
-    public function getByIdUser( $id ){
+    public function getByIdUser( $idUser ){
 
         $user = new User();
-        $result = $user->where('usr_id', $id)->first();
+        $result = $user->where('usr_id', $idUser)->first();
 
         return response()->json(
             [
@@ -68,7 +68,7 @@ class UserController extends Controller
     }
 
      // EDITAR USUARIO
-     public function updateUser( Request $request, $id ){
+     public function updateUser( Request $request, $idUser ){
 
         $data = $request->user; // extraigo el usuario de la request que e ingresado en el middleware
 
@@ -78,8 +78,8 @@ class UserController extends Controller
         unset($data['usr_email']);
         unset($data['usr_img']);
 
-        $user_update = User::where( 'usr_id',$id )->update( $data );
-        $result = User::where('usr_id', $id)->first();
+        $user_update = User::where( 'usr_id',$idUser )->update( $data );
+        $result = User::where( 'usr_id', $idUser )->first();
 
         return response()->json(
             [
@@ -89,11 +89,11 @@ class UserController extends Controller
     }
 
      // ELIMINAR USUARIO
-     public function deleteUser( $id ){
+     public function deleteUser( $idUser ){
 
         // solo cambiar el estado del usuario
-        $user_update = User::where( 'usr_id',$id )->update( ['usr_estate' => 2] );
-        $result = User::where('usr_id', $id)->first();
+        $user_update = User::where( 'usr_id',$idUser )->update( ['usr_estate' => 2] );
+        $result = User::where('usr_id', $idUser )->first();
 
         return response()->json(
             [

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User; // importamos el modelo
+use App\Models\User;
+use App\Models\Post;
+use App\Models\Category;
+
 use Illuminate\Support\Facades\DB; // trabajar con la BD
 use PhpParser\Node\Expr\BinaryOp\Concat;
 
@@ -17,14 +20,25 @@ class SearchController extends Controller
         $termino = $request->termino;
 
         $results = [];
+
         switch( $coleccion ){
 
             case 'users':
                 $results =  $this->searchUser( $termino  );
+            break;
 
+            case 'categories':
+                $results =  $this->searchCategories( $termino  );
+            break;
+
+            case 'posts':
+                $results =  $this->searchPost( $termino  );
             break;
 
             default:
+                return response()->json( [
+                    'mensaje' => ' coleccion no programada aun'
+                ],500);
             break;
         }
 
@@ -37,18 +51,13 @@ class SearchController extends Controller
 
     }
 
+
+
+    // BUSCAR USUARIO
     public function searchUser( $termino = '' ){
 
-
-        // trae los usuarios que coinciden con la busqueda pero omite los eliminados
-        // $comp = User::where('usr_email','LIKE', "%$termino%")
-        //             ->orWhere('usr_surname','LIKE', "%$termino%")
-        //             ->orWhere('usr_email','LIKE', "%$termino%")
-        //             ->get();
-
-
         // trae a los usuarios omitiendo a los que estan eliminados
-        $results = User::where(function ( $query ) use ( $termino ){
+        $result = User::where(function ( $query ) use ( $termino ){
 
                 $query->where( 'usr_estate', '=', 1 )
                 ->where('usr_email','LIKE', "%$termino%");
@@ -65,7 +74,33 @@ class SearchController extends Controller
 
             })->get();
 
-        $count = sizeof( $results );
-        return array( $results, $count );
+        $count = sizeof( $result );
+        return array( $result, $count );
+    }
+
+
+
+    // BUSCAR POST
+    public function searchPost( $termino = '' ){
+
+        $result = Post::where( 'pst_estate', '=', 1)
+                        ->where( 'pst_title', 'LIKE', "%$termino%" )
+                        ->get();
+
+        $count = sizeof( $result );
+        return array( $result, $count );
+    }
+
+
+
+    // BUSCAR CATEGORIA
+    public function searchCategories( $termino = '' ){
+
+        $result = Category::where( 'cat_estate', '=', 1)
+        ->where( 'cat_name', 'LIKE', "%$termino%" )
+        ->get();
+
+        $count = sizeof( $result );
+        return array( $result, $count );
     }
 }

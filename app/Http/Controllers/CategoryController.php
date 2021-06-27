@@ -30,7 +30,7 @@ class CategoryController extends Controller
     // TRAER LAS CATEGORIAS POR ID
     public function getByIdCategory( Request $request ){
 
-        $id = $request->id;
+        $id = $request->idCategory;
         $getIdCategory = new \getIdCategory();  // instanciar el helper que contiene la consulta
         $result = $getIdCategory->getId( $id, 'cat_id');
 
@@ -46,7 +46,7 @@ class CategoryController extends Controller
     // TRAER LAS CATEGORIAS POR ID DE USARIO
     public function getCategoryIdUser( Request $request){
 
-        $id = $request->id;
+        $id = $request->idUser;
         $getIdCategory = new \getIdCategory();  // instanciar el helper que contiene la consulta
         $result = $getIdCategory->getId( $id, 'cat_idUser');
 
@@ -112,7 +112,7 @@ class CategoryController extends Controller
         $data = $request->json()->all();
         $user = $request->user; // obtengo el id del usuario logeado, que se a agregado al validar el JWT
         $idUser = $user['usr_id'];
-        $id = $request->id;
+        $id = $request->idCategory;
 
         $result = Category::where('cat_id', $id)->first();
         $idUserCategory = $result['cat_idUser'];
@@ -124,7 +124,7 @@ class CategoryController extends Controller
             ], 400);
         }
 
-        $user_update = Category::where( 'cat_id',$id )->update( [ 'cat_name' => $data['cat_name'] ] );
+        $category_update = Category::where( 'cat_id',$id )->update( [ 'cat_name' => strtoupper( $data['cat_name'] ) ] );
         $result = Category::where('cat_id', $id)->first();
 
         return response()->json(
@@ -137,7 +137,7 @@ class CategoryController extends Controller
     // ELIMINAR CATEGORIAS
     public function deleteCategory( Request $request ){
 
-        $id = $request->id;
+        $id = $request->idCategory;
 
           $user_update = Category::where( 'cat_id',$id )->update( ['cat_estate' => 2] );
           $result = Category::where('cat_id', $id)->first();

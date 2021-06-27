@@ -20,7 +20,7 @@ class validateColeccion
 
         $coleccionesPermitidas = array(
             'users',
-            'products',
+            'posts',
             'categories'
         );
 
