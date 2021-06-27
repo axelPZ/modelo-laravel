@@ -24,7 +24,7 @@ class validationInputs
 
     // VALIDAR LOS CAMPOS
              //para mas informacion de las validaciones buscar en LaravelValidation
-            if( !empty( $data['password'] ) ) {
+            if( !empty( $data['usr_password'] ) ) {
 
                 $validate = \Validator::make(
                     $data,

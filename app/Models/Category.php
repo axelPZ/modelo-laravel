@@ -14,7 +14,7 @@ class Category extends Model
 
     // relacion de muchos a uno
     public function user(){
-        return $this->belongsTo('App\User', 'usr_id');
+        return $this->belongsTo('App\Models\User', 'cat_idUser');
     }
 
 

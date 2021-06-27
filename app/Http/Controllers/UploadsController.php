@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use CloudinaryLabs\CloudinaryLaravel\MediaAlly;
 
 class UploadsController extends Controller
 {
@@ -79,7 +80,11 @@ class UploadsController extends Controller
             [
                 'message'=>'no se encontro la imagen'
             ], 404);
+    }
 
+    public function uploadCoudinary( Request $request ){
+
+        // PENDIENTE
     }
 }
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PruebaController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
@@ -78,8 +79,24 @@ Route::get('/token', function () {
     // BUSCAR
     Route::get('/api/search/{coleccion}/{termino}',[SearchController::class, 'search'])->middleware('validateColeccion');
 
-    //SUBIR O ACTUALIZAR IMAGEN
+    //SUBIR O ACTUALIZAR IMAGEN SERVIDOR LOCAL
     Route::post('/api/uploads/{coleccion}/{id}',[UploadsController::class, 'upload'])->middleware('validateColeccion','validateImg');
 
-    // DEVOLVER LA IMAGEN
+    // DEVOLVER LA IMAGEN SERVIDOR LOCAL
     Route::get('/api/uploads/{coleccion}/{id}', [UploadsController::class, 'getImg'])->middleware('validateColeccion');
+
+    // SUBIR O ACTUALIZAR IMAGEN A CLOUDINARY (pendiente)
+
+    // CATEGORIAS
+    Route::get('/api/categories', [CategoryController::class, 'getCategories']);
+    Route::get('/api/categories/{id}', [CategoryController::class, 'getByIdCategory'])->middleware( 'validateIdCategory' );
+    Route::get('/api/categories/user/{id}', [CategoryController::class, 'getCategoryIdUser'])->middleware( 'validateIdUser' );
+    Route::patch('/api/categories/user/register', [CategoryController::class, 'getCategoryUserRegister'])->middleware( 'validateJWT' );
+    Route::post('/api/categories', [CategoryController::class, 'addCategory'])->middleware( 'validateJWT', 'validateInputCategory' );
+    Route::put('/api/categories/{id}', [CategoryController::class, 'updateCategory'])->middleware( 'validateJWT', 'validateIdCategory', 'validateInputCategory' );
+    Route::delete('/api/categories/{id}', [CategoryController::class, 'deleteCategory'])->middleware( 'validateJWT', 'isAdminRole', 'validateIdCategory' );
+
+
+    // POSTS
+
+

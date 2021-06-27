@@ -17,9 +17,6 @@ class UserController extends Controller
     // LISTAR USUARIOS
     public function getUser(){
 
-        // QUERYS DE LARAVEL
-        // https://translate.google.com/translate?hl=es&sl=en&u=https://laravel.com/docs/8.x/queries&prev=search&pto=aue
-
         $result = User::where('usr_estate', 1)->get();
         $count = User::where('usr_estate', 1)->count();
 
